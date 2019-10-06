@@ -16,11 +16,6 @@
     "operatorsAliases": false
   },
   "production": {
-    "username": "zkhlbumxguqarf",
-    "password": "d13c60e957966a96de0a011d1122e4d5642c484699ad572a179e731f8ae801cc",
-    "database": "df1k31nveubtst",
-    "host": "ec2-174-129-238-192.compute-1.amazonaws.com",
-    "dialect": "postgres",
-    "operatorsAliases": false
+    "url": "postgres://zkhlbumxguqarf:d13c60e957966a96de0a011d1122e4d5642c484699ad572a179e731f8ae801cc@ec2-174-129-238-192.compute-1.amazonaws.com:5432/df1k31nveubtst"
   }
 }
