@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser'
-//import Role from '../models/role'
+import pg from 'pg';
 
 const app = express();
 app.use(bodyParser.json());
