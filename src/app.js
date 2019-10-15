@@ -11,13 +11,19 @@ app.get('/', function (req, res, next) {
     connectionString: connectionString,
   });
 
-  pool.query('SELECT * FROM Roles where id = $1', [1], (err, res) => {
-    if(err){
-      res.send(err);
-    }
-    res.send(res);
-    pool.end()
-  })
+  (async () => {
+    const result = await pool.query('SELECT * FROM Roles where id = 1');
+    await pool.end()
+    res.send(result);
+  })()
+
+  // pool.query('SELECT * FROM Roles where id = $1', [1], (err, res) => {
+  //   if(err){
+  //     res.send(err);
+  //   }
+  //   res.send(res);
+  //   pool.end()
+  // })
 });
 
 export default app;
