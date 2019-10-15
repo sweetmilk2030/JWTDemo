@@ -13,9 +13,9 @@ app.get('/', function (req, res, next) {
 
   pool.query('SELECT * FROM Roles where id = $1', [1], (err, res) => {
     if(err){
-      res.status(400).send(err);
+      res.send(err);
     }
-    res.status(200).send(res);
+    res.send(res);
     pool.end()
   })
 });
