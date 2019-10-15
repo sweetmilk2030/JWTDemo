@@ -22,7 +22,7 @@ app.post('/', function (req, res) {
             console.log("not able to get connection "+ err);
             res.status(400).send(err);
         } 
-        client.query('SELECT * FROM student where id = $1', [1],function(err,result) {
+        client.query('SELECT * FROM Roles where id = $1', [1],function(err,result) {
             done(); // closing the connection;
             if(err){
                 console.log(err);
