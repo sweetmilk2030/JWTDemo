@@ -20,11 +20,9 @@ app.post('/', function (req, res) {
     connectionString: connectionString,
   });
 
-  pool.on('error', function (err, client) {
+  await pool.on('error', function (err, client) {
     res.send('idle client error', err.message, err.stack);
   });
-
-
 
   try {
     const res = await  pool.query('SELECT * from "Roles" where id = ', ['1'], function(err, res) {
@@ -34,10 +32,10 @@ app.post('/', function (req, res) {
         res.send(res.rows[0]);
       }
     });
-    res.send(res.rows[0])
+    res.send(res.rows[0]);
     // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
   } catch (err) {
-    res.send(err.stack)
+    res.send(err.stack);
   }
 })
 
