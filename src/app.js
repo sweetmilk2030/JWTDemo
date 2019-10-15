@@ -15,28 +15,23 @@ app.post('/', function (req, res) {
       host: 'ec2-174-129-238-192.compute-1.amazonaws.com',
       dialect: 'postgres',
   };
-
-  const pool = new Pool({
-    connectionString: connectionString,
+ 
+  app.get('/', function (req, res, next) {
+      pg.connect(connectionString,function(err,client,done) {
+        if(err){
+            console.log("not able to get connection "+ err);
+            res.status(400).send(err);
+        } 
+        client.query('SELECT * FROM student where id = $1', [1],function(err,result) {
+            done(); // closing the connection;
+            if(err){
+                console.log(err);
+                res.status(400).send(err);
+            }
+            res.status(200).send(result.rows);
+        });
+      });
   });
-
-  await pool.on('error', function (err, client) {
-    res.send('idle client error', err.message, err.stack);
-  });
-
-  try {
-    const res = await  pool.query('SELECT * from "Roles" where id = ', ['1'], function(err, res) {
-      if(err) {
-          res.send(err);
-      } else {
-        res.send(res.rows[0]);
-      }
-    });
-    res.send(res.rows[0]);
-    // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
-  } catch (err) {
-    res.send(err.stack);
-  }
 })
 
 export default app;
