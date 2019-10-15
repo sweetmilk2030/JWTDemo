@@ -4,34 +4,23 @@ import bodyParser from 'body-parser'
 
 const app = express();
 app.use(bodyParser.json());
+const connectionString = 'postgres://zkhlbumxguqarf:d13c60e957966a96de0a011d1122e4d5642c484699ad572a179e731f8ae801cc@ec2-174-129-238-192.compute-1.amazonaws.com:5432/df1k31nveubtst';
 
-app.post('/', function (req, res) {
-  const { Pool } = require('pg');
-  const connectionString = 'postgres://zkhlbumxguqarf:d13c60e957966a96de0a011d1122e4d5642c484699ad572a179e731f8ae801cc@ec2-174-129-238-192.compute-1.amazonaws.com:5432/df1k31nveubtst';
-  var config = {
-      username: 'zkhlbumxguqarf', 
-      database: 'df1k31nveubtst', 
-      password: 'd13c60e957966a96de0a011d1122e4d5642c484699ad572a179e731f8ae801cc', 
-      host: 'ec2-174-129-238-192.compute-1.amazonaws.com',
-      dialect: 'postgres',
-  };
- 
-  app.get('/', function (req, res, next) {
-      pg.connect(connectionString,function(err,client,done) {
+app.get('/', function (req, res, next) {
+  pg.connect(connectionString,function(err,client,done) {
+    if(err){
+        console.log("not able to get connection "+ err);
+        res.status(400).send(err);
+    } 
+    client.query('SELECT * FROM Roles where id = $1', [1],function(err,result) {
+        done(); // closing the connection;
         if(err){
-            console.log("not able to get connection "+ err);
+            console.log(err);
             res.status(400).send(err);
-        } 
-        client.query('SELECT * FROM Roles where id = $1', [1],function(err,result) {
-            done(); // closing the connection;
-            if(err){
-                console.log(err);
-                res.status(400).send(err);
-            }
-            res.status(200).send(result.rows);
-        });
-      });
+        }
+        res.status(200).send(result.rows);
+    });
   });
-})
+});
 
 export default app;
