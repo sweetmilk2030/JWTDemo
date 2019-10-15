@@ -12,9 +12,9 @@ app.get('/', function (req, res, next) {
   });
 
   (async () => {
-    const result = await pool.query('SELECT * FROM "Roles" where id = 1');
+    const result = await pool.query('SELECT * FROM "Roles"');
     await pool.end()
-    res.send(result);
+    res.send(result.rows);
   })()
 
   // pool.query('SELECT * FROM Roles where id = $1', [1], (err, res) => {
