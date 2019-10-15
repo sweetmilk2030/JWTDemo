@@ -12,7 +12,7 @@ app.get('/', function (req, res, next) {
   });
 
   (async () => {
-    const result = await pool.query('SELECT * FROM Roles where id = 1');
+    const result = await pool.query('SELECT * FROM pg_catalog.pg_tables');
     await pool.end()
     res.send(result);
   })()
