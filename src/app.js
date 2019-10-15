@@ -21,11 +21,11 @@ app.post('/', function (req, res) {
   pool.query('SELECT * from "Roles" where id = ', ['1'], function(err, res) {
       if(err) {
           res.send(err);
-          return console.error('error running query', err);
+      } else {
+        res.send(res.rows[0]);
       }
-      res.send(res.rows[0]);
   });
-  res.send('Hello World');
+  res.send('Hello World Hung');
 })
 
 export default app;
